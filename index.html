@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Árbol Binario - CRUD</title>
+    <link rel="stylesheet" href="style.css"> <!-- Asegúrate de incluir tu CSS -->
+</head>
+<body>
+    <h1>Árbol Binario</h1>
+
+    <div id="main">
+        <div id="controls">
+            <input type="number" id="valorInput" placeholder="Valor">
+            <div id="botones" style="display: flex; flex-direction: column; gap: 10px;">
+                <button onclick="agregar()">Agregar</button>
+                <button onclick="buscar()">Buscar</button>
+                <button onclick="eliminar()">Eliminar</button>
+                
+            </div>
+        </div>
+
+        <canvas id="canvas" width="600" height="400"></canvas>
+    </div>
+    
+    <p id="mensaje"></p> <!-- Mensaje de confirmación -->
+
+    <script src="tree.js"></script>
+    <script>
+        // Funciones de confirmación para CRUD
+        function confirmAction(action) {
+            return confirm(`¿Estás seguro de que deseas ${action} este nodo?`);
+        }
+
+        function agregar() {
+            const valor = parseInt(document.getElementById('valorInput').value);
+            if (!isNaN(valor) && confirmAction("agregar")) {
+                arbol.insertar(valor);
+                dibujarArbol();
+                mostrarMensaje(`Valor ${valor} agregado al árbol.`);
+            } else {
+                alert('Por favor ingrese un número válido.');
+            }
+        }
+
+        function buscar() {
+            const valor = parseInt(document.getElementById('valorInput').value);
+            const resultado = arbol.buscar(valor);
+            if (resultado) {
+                mostrarMensaje(`Valor ${valor} encontrado en el árbol.`);
+            } else {
+                mostrarMensaje(`Valor ${valor} no encontrado en el árbol.`);
+            }
+        }
+
+        function eliminar() {
+            const valor = parseInt(document.getElementById('valorInput').value);
+            if (confirmAction("eliminar")) {
+                arbol.eliminar(valor);
+                dibujarArbol();
+                mostrarMensaje(`Valor ${valor} eliminado del árbol.`);
+            }
+        }
+
+
+
+        // Dibuja el árbol en el canvas
+        function dibujarArbol() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas
+            if (arbol.raiz !== null) {
+                dibujarNodo(arbol.raiz, canvas.width / 2, 50, canvas.width / 4);
+            }
+        }
+
+        // Función recursiva para dibujar un nodo
+        function dibujarNodo(nodo, x, y, espacioHorizontal) {
+            if (nodo !== null) {
+                // Dibujar nodo actual
+                ctx.beginPath();
+                ctx.arc(x, y, 20, 0, 2 * Math.PI);
+                ctx.fillStyle = getRandomColor(); // Color dinámico
+                ctx.fill();
+                ctx.stroke();
+                ctx.fillStyle = 'black';
+                ctx.textAlign = 'center';
+                ctx.font = '16px Arial';
+                ctx.fillText(nodo.valor, x, y + 5); // Mostrar el valor del nodo
+
+                // Dibujar líneas de conexión con los hijos
+                if (nodo.izquierdo !== null) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x - espacioHorizontal, y + 70);
+                    ctx.stroke();
+                    dibujarNodo(nodo.izquierdo, x - espacioHorizontal, y + 70, espacioHorizontal / 2);
+                }
+
+                if (nodo.derecho !== null) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x + espacioHorizontal, y + 70);
+                    ctx.stroke();
+                    dibujarNodo(nodo.derecho, x + espacioHorizontal, y + 70, espacioHorizontal / 2);
+                }
+            }
+        }
+
+        // Genera un color aleatorio
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</body>
+</html>

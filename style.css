@@ -1,0 +1,73 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(120deg, #b0c4de 0%, #708090 100%); /* Grises y azules */
+    color: #fff; /* Texto blanco para mayor contraste */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar horizontalmente */
+    justify-content: center; /* Centrar verticalmente */
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-top: 20px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); /* Sombras más oscuras para mayor legibilidad */
+}
+
+#main {
+    display: flex;
+    justify-content: center; /* Centrar controles y canvas */
+    align-items: flex-start; /* Alinear elementos en la parte superior */
+    gap: 20px; /* Espacio entre controles y canvas */
+}
+
+#controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinear controles en la parte superior */
+    align-items: center; /* Centrar controles horizontalmente */
+}
+
+input[type="number"] {
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    width: 160px;
+    outline: none;
+    background-color: #f0f8ff; /* Fondo azul claro */
+    color: #333; /* Color del texto más oscuro */
+}
+
+button {
+    padding: 12px 18px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    background-color: #4682b4; /* Azul medio */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra más suave */
+}
+
+button:hover {
+    background-color: #4169e1; /* Azul más oscuro en hover */
+}
+
+#canvas {
+    background: #ffffff; /* Fondo blanco para el canvas */
+    border: 3px solid #b0c4de; /* Borde gris claro */
+    border-radius: 12px;
+}
+
+#mensaje {
+    margin-top: 15px;
+    font-size: 1.2rem;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
